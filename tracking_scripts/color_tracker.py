@@ -153,8 +153,11 @@ while True:
             # otherwise, only one direction is non-empty
             else:
                 direction = dirX if dirX != "" else dirY
-            dX = dX/radius
-            dY = dY/radius
+            if radius != 0:
+                dX = dX/radius
+                dY = dY/radius
+            else:
+                continue
             direction = direction = "{}, {}".format(dX, dY)
         # otherwise, compute the thickness of the line and
         # draw the connecting lines
