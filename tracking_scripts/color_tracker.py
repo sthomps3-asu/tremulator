@@ -5,6 +5,7 @@ import argparse
 import imutils
 import cv2
 import csv
+import time
 
 def nothing(x):
     pass
@@ -40,11 +41,10 @@ if not args.get("video", False):
 # otherwise, grab a reference to the video file
 else:
     camera = cv2.VideoCapture(args["video"])
-    
+
 file = open('tennis_ball.csv', 'w')
 writeOut = csv.writer(file, dialect='excel')
-writeOut.writerow(['x', 'y', 'diameter', 'area'])
-
+writeOut.writerow(['time at capture','time at tracking', 'x', 'y', 'diameter', 'area'])
 
 # keep looping
 while True:
@@ -55,9 +55,11 @@ while True:
     h_upper = h_lower + 10
     hsvLower = (h_lower, 86, 6)
     hsvUpper = (h_upper, 255, 255)
-    
+
     # grab the current frame
+    timeAtCapture = time.time()
     (grabbed, frame) = camera.read()
+
 
     # if we are viewing a video and we did not grab a frame,
     # then we have reached the end of the video
@@ -70,7 +72,7 @@ while True:
     blurred = cv2.GaussianBlur(frame, (11, 11), 0)
     hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
     cv2.imshow('hsv', hsv)
-    
+
     # construct a mask for the color "green", then perform
     # a series of dilations and erosions to remove any small
     # blobs left in the mask
@@ -134,7 +136,7 @@ while True:
             dX = pts[-10][0] - pts[i][0]
             dY = pts[-10][1] - pts[i][1]
             (dirX, dirY) = ("", "")
-            writeOut.writerow([pts[i][0], pts[i][1], diameter, area])
+            writeOut.writerow([timeAtCapture, time.time(), pts[i][0], pts[i][1], diameter, area])
 
             # ensure there is significant movement in the
             # x-direction
