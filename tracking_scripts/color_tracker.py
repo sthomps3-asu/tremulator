@@ -6,6 +6,7 @@ import imutils
 import cv2
 import csv
 import time
+from datetime import datetime
 
 def nothing(x):
     pass
@@ -57,7 +58,7 @@ while True:
     hsvUpper = (h_upper, 255, 255)
 
     # grab the current frame
-    timeAtCapture = time.time()
+    timeAtCapture = datetime.now()
     (grabbed, frame) = camera.read()
 
 
@@ -136,7 +137,7 @@ while True:
             dX = pts[-10][0] - pts[i][0]
             dY = pts[-10][1] - pts[i][1]
             (dirX, dirY) = ("", "")
-            writeOut.writerow([timeAtCapture, time.time(), pts[i][0], pts[i][1], diameter, area])
+            writeOut.writerow([timeAtCapture, datetime.now(), pts[i][0], pts[i][1], diameter, area])
 
             # ensure there is significant movement in the
             # x-direction
