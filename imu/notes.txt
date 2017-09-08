@@ -1,0 +1,36 @@
+Notes for tremulator project:
+
+8/6:
+	Camera up and running connected to USB micro port.
+	Wifi working but intermittently cutting out. Eth is dependable.
+	OpenCV script is having issues tracking tennis ball, but is able to track smaller ball.
+	Need to solder new accelerometer headers and experiment.
+
+8/9:
+	BNO055 accelerometer detected on i2c bus 1 with command: sudo i2cdetect -y -r 1
+	Address is 0x28
+
+	sudo i2cget 1 40 0 :: returned 0xa0
+	sudo i2cget 1 40 1 :: returned 0xfb
+
+8/23:
+    # Set the mode to NDOF mode before we can read actual data.
+    sudo i2cset 1 0x28 0x3D 0x1C
+
+    # Check calibration register. All 1's means everything is calibrated.
+    sudo i2cget 1 0x28 0x35
+
+    # Check/set full scale range
+
+
+9/7:
+
+   To compile: Need c++ standard 11 to use to_string function.
+    g++ -std=c++0x i2c_test.cpp
+
+
+View CSV data in terminal.
+column -s, -t < imudata.csv | less -#2 -N -S
+
+
+   
