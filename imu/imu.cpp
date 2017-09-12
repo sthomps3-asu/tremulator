@@ -110,11 +110,11 @@ void readData( __s32 *rowData, int file)
 void writeToCsv( __s32 *rowData)
 {
     myfile << to_string(now) + ",";
-    for (int i=0; i < COLUMNS - 1; i++)
+    for (int i=0; i < COLUMNS - 2; i++)
     {
         myfile << to_string(rowData[i]) + ",";
     }
-    myfile << rowData[COLUMNS - 1];
+    myfile << rowData[COLUMNS - 2];
     myfile << '\n';
 }
 
