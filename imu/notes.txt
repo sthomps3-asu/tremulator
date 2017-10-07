@@ -34,3 +34,10 @@ column -s, -t < imudata.csv | less -#2 -N -S
 
 
    
+10/6
+Arm Measurements:
+Shoulder to elbow sensor: 12""
+Elbow to wrist sensor: 9"
+Shoulder to elbow: 15"
+Elbow to wrist: 12"
+Camera to ball: 30"
