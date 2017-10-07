@@ -30,12 +30,13 @@ void delay(int del);
 void writeToCsv( __s32 *rowData_bus0, __s32 *rowData_bus1);
 void sigHandler(int sig);
 void checkCalibration(int file_0, int file_1);
+void printData(__s32 *rowData_bus0);
 
 ofstream csv_bus0;
 ofstream csv_bus1;
 uint64_t now;
 
-int main()
+int main(int argc, char **argv)
 {
 
     signal(SIGINT, sigHandler);
@@ -80,8 +81,12 @@ int main()
         exit(1);
     }
 
-    // Pull on calibration register until fully calibrated
-    checkCalibration(file_0,file_1);
+    // Poll on calibration register until fully calibrated
+
+    if (argc != 2)
+    {
+        checkCalibration(file_0,file_1);
+    }
 
     printf("Collecting data... Press ctrl+c to exit.\n");
 
@@ -105,6 +110,16 @@ void delay(int del)
     {
 
     }
+}
+
+void printData(__s32 *rowData_bus0)
+{
+    printf("\n");
+    for (int i = 0; i < COLUMNS-4; i++)
+    {
+        printf("%d :: ", rowData_bus0[i]);
+    }
+    printf("\n\n");
 }
 
 void readData( __s32 *rowData_bus0, __s32 *rowData_bus1, int file_0, int file_1)
