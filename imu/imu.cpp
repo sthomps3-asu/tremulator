@@ -41,9 +41,19 @@ int main(int argc, char **argv)
 
     signal(SIGINT, sigHandler);
 
+    time_t rawtime;
+    struct tm * timeinfo;
+    char buffer[80];
+
+    time (&rawtime);
+    timeinfo = localtime(&rawtime);
+
+    strftime(buffer,sizeof(buffer),"%d-%m-%Y %I:%M:%S",timeinfo);
+
+    string ts_string = buffer;
     // Setup CSV output file.
-    csv_bus0.open ("imudata_bus0.csv");
-    csv_bus1.open ("imudata_bus1.csv");
+    csv_bus0.open ("imudata_bus0_" + ts_string + ".csv");
+    csv_bus1.open ("imudata_bus1_" + ts_string + ".csv");
 
 
     csv_bus0 << "TIMESTAMP,ACCEL_DATA_X, ACCEL_DATA_Y, ACCEL_DATA_Z, GYRO_DATA_X, GYRO_DATA_Y, GYRO_DATA_Z, MAG_DATA_X, MAG_DATA_Y, MAG_DATA_Z, QUATERNION_DATA_W, QUATERNION_DATA_X, QUATERNION_DATA_Y, QUATERNION_DATA_Z\n";
